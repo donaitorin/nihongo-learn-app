@@ -18,6 +18,14 @@ Guidance for Claude when working in this repository.
    read-only ones like `status`, `diff` and `log`. Never commit, push, pull, merge, rebase, stash,
    reset, checkout or create branches on your own. When work is done, suggest which files to commit,
    grouped into commits, with messages. I review the diff in VS Code and commit by hand.
+   At the end of every task, list the suggested commits in order, each with a Conventional Commits
+   message (`type(scope): message`) and the exact files or folders it includes. Each commit must leave
+   the project in a buildable state (for example, `pubspec.yaml` must not reference assets that arrive
+   in a later commit, and `lib/main.dart` must exist): merge commits when needed. After the list, give
+   ONE shell command in a ```bash block that I can paste from the repo root to create all the commits in
+   order: steps chained with `&&`, one `git add <paths>` plus `git commit -m "<message>"` per commit,
+   paths with spaces quoted, only explicit paths in `git add` (never `.` or `-A`), and no `push`.
+   Never run that command yourself.
 2. **Use fvm for everything.** Run `fvm flutter ...` and `fvm dart ...`, never bare `flutter` or
    `dart`. Do not change the pinned Flutter version without asking.
 3. **Ask before adding a dependency.** Say what the package is for, why it is needed, and what the
@@ -162,4 +170,5 @@ docs/
 
 1. `fvm flutter analyze`, `fvm dart format`, `fvm flutter test`.
 2. Write the worklog entry in `docs/worklog/` and update `docs/README.md`.
-3. Reply with a short summary: what changed, how to test it, pending items, and the suggested commits.
+3. Reply with a short summary: what changed, how to test it, pending items, and the suggested commits
+   (ordered list plus the single paste-ready `bash` command, as described in the Git rule above).
